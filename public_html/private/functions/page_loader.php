@@ -14,7 +14,7 @@ class page_loader{
  /* 09/12/2015
   * HEAD FOR THE HTML ALSO CSS FILES INCLUDED
   */
-    public function header_HTML($title){
+    public function header_HTML($title, array $js){
         if(!isset($title)){
             $title ="Home";
         }else{
@@ -22,13 +22,24 @@ class page_loader{
         }
        $html_header="" 
         ?>
+<!DOCTYPE html>
 <html>
     <head>
+         <meta charset="UTF-8"> 
         <title><?php echo $this->title; ?></title> 
         <!-- Bootstrap core CSS -->
         <link href="assets/css/bootstrap.min.css" rel="stylesheet">
         <link href="assets/css/main.css" rel="stylesheet">
         <link rel="stylesheet" href="assets/css/font-awesome.min.css">
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+<?php
+    foreach ($js as $jsfile){
+        echo '<script src="assets/js/'.$jsfile.'"></script>';
+    }
+
+?>
+
 
     </head>
     <body>
@@ -137,7 +148,8 @@ return $html_header;
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.3/jquery-ui.min.js"></script>
+
     <script src="assets/js/bootstrap.min.js"></script>    
     </body>
 </html>
@@ -151,8 +163,8 @@ return $footer;
     * MOUNTS ALL THE PIECES TOGETHER 
     * IT IS CALLED IN init.php
     */
-   public function Load_html($title, $body, array $link){
-       $this->header_HTML($title); 
+   public function Load_html($title, $body, array $link, array $js){
+       $this->header_HTML($title,$js); 
        $this->navigation($link);
        $this->body_html($body);
        $this->footer_html();
